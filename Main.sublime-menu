@@ -1,0 +1,27 @@
+[
+
+{
+  "id": "preferences",
+  "children": [{
+    "id": "package-settings",
+    "children": [{
+      "caption": "Sass Solution ",
+      "children": [{
+                                "command": "open_file", "args":
+                                {
+                                    "file": "${packages}/sassSolution/sassSolution.sublime-settings"
+                                },
+                                "caption": "Settings – User"
+                            }
+
+
+
+
+
+
+
+                            ]
+    }]
+  }]
+}
+]

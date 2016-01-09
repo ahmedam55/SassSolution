@@ -1,0 +1,13 @@
+[
+{
+    "id" : "cnPremailer",
+    "caption" : "cnPremailer",
+    "command" : "cnpremailer",
+    "children":[
+	{
+		"caption" : "run",
+		"command" : "cnpremailer"
+	}
+	]
+}
+]
