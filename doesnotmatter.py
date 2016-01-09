@@ -39,8 +39,8 @@ class SassSolutionCommand(sublime_plugin.EventListener):
                     # MAGIC+='["'+(view.substr(x).replace('@mixin ','').replace(' ',''))+'","'+(view.substr(x).replace('@mixin ','').replace(' ','').replace('$','\\\$'))+'"],'
 
 
-                path='C:\\Users\\mahmoud\\AppData\\Roaming\\Sublime Text 3\\Packages\\User\\sbc-api-mysass.sublime-settings'
-                f=open(path,'r')
+                path=sublime.packages_path()+'\\User\\sbc-api-mysass.sublime-settings'
+                f=open(path,'w+')
                 content=f.readlines()
                 # point=(f.read().find('"completions":\n  ['))
                 f.close()
