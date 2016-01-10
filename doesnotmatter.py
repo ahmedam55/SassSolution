@@ -14,11 +14,11 @@ class SassSolutionCommand(sublime_plugin.EventListener):
                 for x in folders:
                     for file in os.listdir(x):
                         if file.endswith('.scss'):
-                            AllSass+=open(x+file,'r').read()
+                            AllSass+=open(x+file,'r', encoding="utf8").read()
                             # print(x,file)
                             
                 for x in files:
-                	AllSass+=open(x,'r').read()
+                    AllSass+=open(x,'r' ,encoding="utf8").read()
 
                 MAGIC='{"scope": "source.scss - string, source.scss","completions":[';
 
@@ -40,7 +40,7 @@ class SassSolutionCommand(sublime_plugin.EventListener):
 
 
                 path=sublime.packages_path()+'\\User\\sbc-api-mysass.sublime-settings'
-                f=open(path,'w+')
+                f=open(path,'w+',encoding="utf8")
                 content=f.readlines()
                 # point=(f.read().find('"completions":\n  ['))
                 f.close()
@@ -53,7 +53,7 @@ class SassSolutionCommand(sublime_plugin.EventListener):
 
                 content=MAGIC
                 # print('HI',content)
-                f=open(path,'w')
+                f=open(path,'w',encoding="utf8")
                 # f.seek(71)
                 # print("".join(content))
                 contents = "".join(content)
