@@ -78,6 +78,32 @@ class Engine:
         return text.replace('"',"").replace('\\','\\\\').replace('$','\\\$' if replaceDollar else '$')
 
 
+    def addMixinsCompletion(pattern,code):
+        mixinsCompletion=''
+
+        for x in re.findall(pattern,code):
+            mixinName=Engine.removeSpecialChars(x[0])
+            mixinArguments=Engine.removeSpecialChars(x[2])
+
+            zeroSlashesMixinArguments=Engine.removeDollarSlashes(mixinArguments)
+
+            mixinsCompletion+='["'+mixinName+'('+zeroSlashesMixinArguments+')'+'","@include '+mixinName+'('+mixinArguments+')'+'"],'
+
+        return mixinsCompletion
+
+
+    def addVariablesCompletion(pattern,code):
+        variablesCompletion=''
+
+        for x in re.findall(pattern,code):
+            variableName=Engine.removeSpecialChars(x[0])
+            variableValue=Engine.removeSpecialChars(x[1],False)
+
+            variablesCompletion+='["'+('$'+variableName+'\t'+variableValue)+'","'+('\\\$'+variableName)+'"],'
+
+        return variablesCompletion
+
+
     def removeDollarSlashes(text):
         return text.replace('\\','')
 
@@ -89,20 +115,8 @@ class Engine:
 
                 jsonText='{"scope": "source.scss - string, source.scss","completions":[';
 
-                for x in re.findall(r'\$(.*?):(.*?);', allSass):
-                    variableName=Engine.removeSpecialChars(x[0])
-                    variableValue=Engine.removeSpecialChars(x[1],False)
-
-                    jsonText+='["'+('$'+variableName+'\t'+variableValue)+'","'+('\\\$'+variableName)+'"],'
-
-                for x in re.findall('\@mixin (\w*)\s{0,}(\((.*?)\)|{|\n)',allSass):
-                    mixinName=Engine.removeSpecialChars(x[0])
-                    mixinArguments=Engine.removeSpecialChars(x[2])
-                    print(x)
-
-                    zeroSlashesMixinArguments=Engine.removeDollarSlashes(mixinArguments)
-
-                    jsonText+='["'+mixinName+'('+zeroSlashesMixinArguments+')'+'","@include '+mixinName+'('+mixinArguments+')'+'"],'
+                jsonText+=Engine.addVariablesCompletion(r'\$(.*?):(.*?);',allSass)
+                jsonText+=Engine.addMixinsCompletion('\@mixin (\w*)\s{0,}(\((.*?)\)|{|\n)',allSass)
 
                 jsonText+=']}'
 
