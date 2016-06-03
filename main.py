@@ -138,9 +138,10 @@ class Engine:
 
                     jsonText+='["'+('$'+variableName+'\t'+variableValue)+'","'+('\\\$'+variableName)+'"],'
 
-                for x in re.findall('\@mixin (.*?)\((.*?)\)',allSass):
+                for x in re.findall('\@mixin (\w*)\s{0,}(\((.*?)\)|{|\n)',allSass):
                     mixinName=Engine.removeSpecialChars(x[0])
-                    mixinArguments=Engine.removeSpecialChars(x[1])
+                    mixinArguments=Engine.removeSpecialChars(x[2])
+                    print(x)
 
                     zeroSlashesMixinArguments=Engine.removeDollarSlashes(mixinArguments)
 
