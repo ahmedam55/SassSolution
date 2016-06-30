@@ -4,6 +4,8 @@ import re
 import os
 import fnmatch
 
+pathSlash ='/' if sublime.platform()!='windows' else '\\'
+
 class SassSolutionCommand(sublime_plugin.EventListener):
     def on_post_save(self, view):
         Engine.runEngine(self,view)
@@ -15,11 +17,11 @@ class AddToAutoCompleteCommand(sublime_plugin.WindowCommand):
         for x in paths:
             if os.path.isfile(x):
                 filesList=Engine.getFiles()
-                filesList.append(x+'\\')
+                filesList.append(x+pathSlash)
                 Engine.setFiles(filesList)
             else:                
                 foldersList=Engine.getFolders()
-                foldersList.append(x+'\\')
+                foldersList.append(x+pathSlash)
                 Engine.setFolders(foldersList)
 
         Engine.saveSettings()
