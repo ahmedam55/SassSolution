@@ -66,7 +66,7 @@ class Engine:
 
 
     def writeJsonFile(content):
-        path=sublime.packages_path()+'\\User\\sbc-api-mysass.sublime-settings'
+        path=sublime.packages_path()+pathSlash+'User'+pathSlash+'sbc-api-mysass.sublime-settings'
         f=open(path,'w',encoding="utf8")
 
         contents = "".join(content)
