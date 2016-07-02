@@ -7,7 +7,7 @@ import fnmatch
 pathSlash ='/' if sublime.platform()!='windows' else '\\'
 
 class SassSolutionCommand(sublime_plugin.EventListener):
-    def on_post_save(self, view):
+    def on_post_save(self, view):        
         Engine.runEngine(self,view)
 
 
@@ -96,9 +96,18 @@ class Engine:
         return matches
 
 
-    def getFilesAndFoldersText(folders,files):
+    def filterFilesAndFoldersToCurrentProject(folders,files,view):
+        currentProjectPath=view.window().folders()[0];
+
+        filteredFolders = [folder for folder in folders if currentProjectPath in folder]
+        filteredFiles = [file for file in files if currentProjectPath in file]
+
+        return (filteredFolders,filteredFiles)
+
+
+    def getFilesAndFoldersText(folders,files,view):
+        folders,files=Engine.filterFilesAndFoldersToCurrentProject(folders,files,view)
         code=''
-        print(folders)
 
         for x in folders:
             for file in Engine.getFoldersFilesRecursively(x):
@@ -156,7 +165,7 @@ class Engine:
     def runEngine(self,view):
         if Engine.isSass(view):   
 
-                allSass=Engine.getFilesAndFoldersText(Engine.getFolders(),Engine.getFiles())
+                allSass=Engine.getFilesAndFoldersText(Engine.getFolders(),Engine.getFiles(),view)
 
                 jsonText='{"scope": "source.scss - string, source.scss","completions":[';
 

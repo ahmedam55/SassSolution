@@ -7,7 +7,7 @@ import fnmatch
 pathSlash ='/' if sublime.platform()!='windows' else '\\'
 
 class SassSolutionCommand(sublime_plugin.EventListener):
-    def on_post_save(self, view):
+    def on_post_save(self, view):        
         Engine.runEngine(self,view)
 
 
