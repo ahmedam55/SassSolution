@@ -1,7 +1,14 @@
-# sassSolution
-sublime plugin to autocomplete all vars and mixins in files you set in the setting file
-##installation
-Download Zip that repository(and rename folder from sassSolution-master to sassSolution) and extract it to packages folder (Sublime Text =>Preferences =>Browse Packages)  
-*that plugin is dependent on that plugin   
-[https://drive.google.com/file/d/0ByAH8lZ1MUfHNC03Q1FzTkYxN2M/view?usp=sharing]  
-just download it and extract in packages folder as you made with that repository folder  
+# SassSolution
+Sublime plugin to autocomplete all SASS vars and mixins in files you set in the setting file
+
+# Easy installation
+You can install this awesome theme through the [Package Control](https://packagecontrol.io/installation).
+
+1. Press <kbd>cmd/ctrl</kbd> + <kbd>shift</kbd> + <kbd>p</kbd> to open the command palette.
+2. Type *"install package"* and press enter. Then search for *"Sass Solution"*
+
+
+# Manual installation
+
+1. Download the [latest release](https://codeload.github.com/ahmedam55/SassSolution/zip/master), extract and rename the directory to **"SassSolution"**.
+2. Move the directory inside your sublime `Packages` directory. **(Preferences > Browse packages...)**
