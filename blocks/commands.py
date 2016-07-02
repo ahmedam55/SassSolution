@@ -10,6 +10,14 @@ class SassSolutionCommand(sublime_plugin.EventListener):
     def on_post_save(self, view):        
         Engine.runEngine(self,view)
 
+    def on_query_completions(self, view, prefix, locations):
+
+        isSass = view.match_selector(locations[0], 'source.scss')
+        if isSass:
+            return Engine.completionList
+
+
+
 
 class AddToAutoCompleteCommand(sublime_plugin.WindowCommand):
     def run(self,paths=[]):

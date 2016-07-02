@@ -10,6 +10,14 @@ class SassSolutionCommand(sublime_plugin.EventListener):
     def on_post_save(self, view):        
         Engine.runEngine(self,view)
 
+    def on_query_completions(self, view, prefix, locations):
+
+        isSass = view.match_selector(locations[0], 'source.scss')
+        if isSass:
+            return Engine.completionList
+
+
+
 
 class AddToAutoCompleteCommand(sublime_plugin.WindowCommand):
     def run(self,paths=[]):
@@ -44,6 +52,7 @@ class ClearAutoCompleteCommand(sublime_plugin.WindowCommand):
         Engine.eraseFolders()
         Engine.saveSettings()
 class Engine:
+    completionList=[]
 
     def isSass(myview):
         extension='.scss'
@@ -128,32 +137,32 @@ class Engine:
         f.close()
 
 
-    def removeSpecialChars(text,replaceDollar=True):
-        return text.replace('"',"").replace('\\','\\\\').replace('$','\\\$' if replaceDollar else '$')
+    def escapeDollar(text,replaceDollar=True):
+        return text.replace('$','\$' if replaceDollar else '$')
 
 
     def addMixinsCompletion(pattern,code):
-        mixinsCompletion=''
+        mixinsCompletion=[]
 
         for x in re.findall(pattern,code):
-            mixinName=Engine.removeSpecialChars(x[0])
-            mixinArguments=Engine.removeSpecialChars(x[2])
+            mixinName=Engine.escapeDollar(x[0])
+            mixinArguments=Engine.escapeDollar(x[2])
 
             zeroSlashesMixinArguments=Engine.removeDollarSlashes(mixinArguments)
 
-            mixinsCompletion+='["'+mixinName+'('+zeroSlashesMixinArguments+')'+'","@include '+mixinName+'('+mixinArguments+')'+'"],'
+            mixinsCompletion.append((mixinName+'('+zeroSlashesMixinArguments+')','@include '+mixinName+'('+mixinArguments+')'))
 
         return mixinsCompletion
 
 
     def addVariablesCompletion(pattern,code):
-        variablesCompletion=''
+        variablesCompletion=[]
 
         for x in re.findall(pattern,code):
-            variableName=Engine.removeSpecialChars(x[0])
-            variableValue=Engine.removeSpecialChars(x[1],False)
+            variableName=Engine.escapeDollar(x[0])
+            variableValue=Engine.escapeDollar(x[1],False)
 
-            variablesCompletion+='["'+('$'+variableName+'\t'+variableValue)+'","'+('\\\$'+variableName)+'"],'
+            variablesCompletion.append(('$'+variableName+'\t'+variableValue,'\$'+variableName))
 
         return variablesCompletion
 
@@ -163,15 +172,9 @@ class Engine:
 
 
     def runEngine(self,view):
-        if Engine.isSass(view):   
-
+        if Engine.isSass(view):
+                Engine.completionList=[]
                 allSass=Engine.getFilesAndFoldersText(Engine.getFolders(),Engine.getFiles(),view)
 
-                jsonText='{"scope": "source.scss - string, source.scss","completions":[';
-
-                jsonText+=Engine.addVariablesCompletion(r'\$([\w*-]*):(.*?);',allSass)
-                jsonText+=Engine.addMixinsCompletion('\@mixin ([\w*-]*)\s{0,}(\((.*?)\)|{|\n)',allSass)
-
-                jsonText+=']}'
-
-                Engine.writeJsonFile(jsonText)
+                Engine.completionList+=Engine.addVariablesCompletion(r'\$([\w*-]*):(.*?);',allSass)
+                Engine.completionList+=Engine.addMixinsCompletion('\@mixin ([\w*-]*)\s{0,}(\((.*?)\)|{|\n)',allSass)
