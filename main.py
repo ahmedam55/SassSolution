@@ -159,7 +159,7 @@ class Engine:
                 jsonText='{"scope": "source.scss - string, source.scss","completions":[';
 
                 jsonText+=Engine.addVariablesCompletion(r'\$(.*?):(.*?);',allSass)
-                jsonText+=Engine.addMixinsCompletion('\@mixin (\w*)\s{0,}(\((.*?)\)|{|\n)',allSass)
+                jsonText+=Engine.addMixinsCompletion('\@mixin ([\w*-]*)\s{0,}(\((.*?)\)|{|\n)',allSass)
 
                 jsonText+=']}'
 

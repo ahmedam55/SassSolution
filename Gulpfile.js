@@ -11,4 +11,4 @@ gulp.task('watch', function() {
     gulp.watch('./blocks/*.py', ['concat']);
 });
 
-gulp.task('default', ['concat','watch'])
+gulp.task('default', ['concat','watch']);
