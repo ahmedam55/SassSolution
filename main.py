@@ -12,7 +12,7 @@ class SassSolutionCommand(sublime_plugin.EventListener):
 
     def on_query_completions(self, view, prefix, locations):
 
-        isSass = view.match_selector(locations[0], 'source.scss')
+        isSass = view.match_selector(locations[0], 'source.scss') | view.match_selector(locations[0], 'source.postcss')
         if isSass:
             return Engine.completionList
 
