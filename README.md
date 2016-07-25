@@ -1,5 +1,6 @@
 # SassSolution
 Sublime plugin to autocomplete all SASS vars and mixins in files you set in the setting file
+![](https://raw.githubusercontent.com/ahmedam55/SassSolution/master/sass-solution-gif.gif)
 
 # Easy installation
 You can install this awesome theme through the [Package Control](https://packagecontrol.io/installation).
