@@ -8,11 +8,11 @@ pathSlash ='/' if sublime.platform()!='windows' else '\\'
 
 class SassSolutionCommand(sublime_plugin.EventListener):
     def on_post_save(self, view):        
-        Engine.runEngine(self,view)
+        Engine.run(self,view)
 
     def on_query_completions(self, view, prefix, locations):
 
-        isSass = view.match_selector(locations[0], 'source.scss')
+        isSass = view.match_selector(locations[0], 'source.scss') | view.match_selector(locations[0], 'source.postcss')
         if isSass:
             return Engine.completionList
 
@@ -25,11 +25,11 @@ class AddToAutoCompleteCommand(sublime_plugin.WindowCommand):
         for x in paths:
             if os.path.isfile(x):
                 filesList=Engine.getFiles()
-                filesList.append(x+pathSlash)
+                filesList.append(x)
                 Engine.setFiles(filesList)
             else:                
                 foldersList=Engine.getFolders()
-                foldersList.append(x+pathSlash)
+                foldersList.append(x)
                 Engine.setFolders(foldersList)
 
         Engine.saveSettings()
@@ -171,7 +171,7 @@ class Engine:
         return text.replace('\\','')
 
 
-    def runEngine(self,view):
+    def run(self,view):
         if Engine.isSass(view):
                 Engine.completionList=[]
                 allSass=Engine.getFilesAndFoldersText(Engine.getFolders(),Engine.getFiles(),view)
