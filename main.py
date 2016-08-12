@@ -8,7 +8,7 @@ pathSlash ='/' if sublime.platform()!='windows' else '\\'
 
 class SassSolutionCommand(sublime_plugin.EventListener):
     def on_post_save(self, view):        
-        Engine.runEngine(self,view)
+        Engine.run(self,view)
 
     def on_query_completions(self, view, prefix, locations):
 
@@ -171,7 +171,7 @@ class Engine:
         return text.replace('\\','')
 
 
-    def runEngine(self,view):
+    def run(self,view):
         if Engine.isSass(view):
                 Engine.completionList=[]
                 allSass=Engine.getFilesAndFoldersText(Engine.getFolders(),Engine.getFiles(),view)
