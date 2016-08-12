@@ -25,11 +25,11 @@ class AddToAutoCompleteCommand(sublime_plugin.WindowCommand):
         for x in paths:
             if os.path.isfile(x):
                 filesList=Engine.getFiles()
-                filesList.append(x+pathSlash)
+                filesList.append(x)
                 Engine.setFiles(filesList)
             else:                
                 foldersList=Engine.getFolders()
-                foldersList.append(x+pathSlash)
+                foldersList.append(x)
                 Engine.setFolders(foldersList)
 
         Engine.saveSettings()
