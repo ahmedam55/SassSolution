@@ -84,6 +84,20 @@ class Engine:
         return text.replace('$','\$' if replaceDollar else '$')
 
 
+    def addFunctionsCompletion(pattern,code):
+        functionsCompletion=[]
+
+        for x in re.findall(pattern,code):
+            functionName=Engine.escapeDollar(x[0])
+            functionArguments=Engine.escapeDollar(x[2])
+
+            zeroSlashesFunctionArguments=Engine.removeDollarSlashes(functionArguments)
+
+            functionsCompletion.append((functionName+'('+zeroSlashesFunctionArguments+')',functionName+'('+functionArguments+')'))
+
+        return functionsCompletion
+
+
     def addMixinsCompletion(pattern,code):
         mixinsCompletion=[]
 
@@ -121,3 +135,4 @@ class Engine:
 
                 Engine.completionList+=Engine.addVariablesCompletion(r'\$([\w*-]*):(.*?);',allSass)
                 Engine.completionList+=Engine.addMixinsCompletion('\@mixin ([\w*-]*)\s{0,}(\((.*?)\)|{|\n)',allSass)
+                Engine.completionList+=Engine.addFunctionsCompletion('\@function ([\w*-]*)\s{0,}(\((.*?)\)|{|\n)',allSass)
