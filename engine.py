@@ -1,3 +1,8 @@
+import sublime
+import os
+import re
+import fnmatch
+
 class Engine:
     completionList=[]
 
@@ -73,15 +78,6 @@ class Engine:
             code+=open(x,'r' ,encoding="utf8").read()
 
         return code
-
-
-    def writeJsonFile(content):
-        path=sublime.packages_path()+pathSlash+'User'+pathSlash+'sbc-api-mysass.sublime-settings'
-        f=open(path,'w',encoding="utf8")
-
-        contents = "".join(content)
-        f.write(contents)
-        f.close()
 
 
     def escapeDollar(text,replaceDollar=True):

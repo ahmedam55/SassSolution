@@ -1,4 +1,3 @@
 Future Work:
-	Register as package control public package
 	add support to @extend directive completion in Sass
 	add support to Less

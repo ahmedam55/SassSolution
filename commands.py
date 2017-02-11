@@ -1,8 +1,8 @@
 import sublime
 import sublime_plugin
-import re
 import os
 import fnmatch
+from .engine import Engine
 
 pathSlash ='/' if sublime.platform()!='windows' else '\\'
 
