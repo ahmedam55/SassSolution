@@ -14,4 +14,8 @@
     "url": "https://github.com/ahmedam55/sassSolution/issues"
   },
   "homepage": "https://github.com/ahmedam55/sassSolution#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1"
+  }
 }
