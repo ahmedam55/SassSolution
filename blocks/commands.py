@@ -7,6 +7,11 @@ import fnmatch
 pathSlash ='/' if sublime.platform()!='windows' else '\\'
 
 class SassSolutionCommand(sublime_plugin.EventListener):
+    def on_activated(self, view):        
+        if not len(Engine.completionList):
+            Engine.runEngine(self,view)
+            print(Engine.completionList)
+
     def on_post_save(self, view):        
         Engine.runEngine(self,view)
 

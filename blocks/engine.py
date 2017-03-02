@@ -79,6 +79,10 @@ class Engine:
         return text.replace('$','\$' if replaceDollar else '$')
 
 
+    def escapeClosingCurlyBracet(text,replaceDollar=True):
+        return text.replace('}','\}')
+
+
     def addFunctionsCompletion(pattern,code):
         functionsCompletion=[]
 
@@ -87,8 +91,9 @@ class Engine:
             functionArguments=Engine.escapeDollar(x[2])
 
             zeroSlashesFunctionArguments=Engine.removeDollarSlashes(functionArguments)
+            functionArguments=Engine.escapeClosingCurlyBracet(functionArguments)
 
-            functionsCompletion.append((functionName+'('+zeroSlashesFunctionArguments+')',functionName+'('+functionArguments+')'))
+            functionsCompletion.append((functionName+'('+zeroSlashesFunctionArguments+')',functionName+'(${1:'+functionArguments+'})'))
 
         return functionsCompletion
 
@@ -101,8 +106,9 @@ class Engine:
             mixinArguments=Engine.escapeDollar(x[2])
 
             zeroSlashesMixinArguments=Engine.removeDollarSlashes(mixinArguments)
+            mixinArguments=Engine.escapeClosingCurlyBracet(mixinArguments)
 
-            mixinsCompletion.append((mixinName+'('+zeroSlashesMixinArguments+')','@include '+mixinName+'('+mixinArguments+')'))
+            mixinsCompletion.append((mixinName+'('+zeroSlashesMixinArguments+')','@include '+mixinName+'(${1:'+mixinArguments+'})'))
 
         return mixinsCompletion
 
