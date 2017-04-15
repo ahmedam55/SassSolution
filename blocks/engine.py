@@ -5,7 +5,9 @@ class Engine:
         extension='.scss'
 
         if(isinstance(myview,sublime.View)):
-            return myview.file_name().endswith(extension)
+            filename = myview.file_name()
+
+            return filename.endswith(extension) if filename else False
         else:
             return myview.endswith(extension)
 

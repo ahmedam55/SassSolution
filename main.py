@@ -10,7 +10,6 @@ class SassSolutionCommand(sublime_plugin.EventListener):
     def on_activated(self, view):        
         if not len(Engine.completionList):
             Engine.runEngine(self,view)
-            print(Engine.completionList)
 
     def on_post_save(self, view):        
         Engine.runEngine(self,view)
@@ -63,7 +62,9 @@ class Engine:
         extension='.scss'
 
         if(isinstance(myview,sublime.View)):
-            return myview.file_name().endswith(extension)
+            filename = myview.file_name()
+
+            return filename.endswith(extension) if filename else False
         else:
             return myview.endswith(extension)
 
